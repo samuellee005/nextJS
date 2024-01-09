@@ -1,5 +1,3 @@
-'use client'
-
 import Image from 'next/image';
 import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
 import InvoiceStatus from '@/app/ui/invoices/status';
@@ -12,33 +10,14 @@ const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December',
 ];
-export default function ExpenseTable({
+export default async function ExpenseTable({
     query,
     currentPage,
 }: {
     query: string;
     currentPage: number;
 }) {
-    const invoices = fetchFilteredInvoices(query, currentPage);
-    const [selectedMonth, setSelectedMonth] = useState<string | null>(null)
-    const [showMonthDropdown, setShowMonthDropdown] = useState(false)
-
-    const handleToggleDropdown = () => {
-        setShowMonthDropdown((prev) => !prev)
-    }
-
-    const handleMonthSelect = (month: string) => {
-        setSelectedMonth(month)
-        setShowMonthDropdown(false)
-    }
-
-    const filteredInvoices = invoices.filter((invoice) => {
-        if (!selectedMonth) {
-            return true
-        }
-        const invoiceMonth = new Date(invoice.date).toLocaleString('en-US', { month: 'long' });
-        return invoiceMonth === selectedMonth;
-    });
+    const invoices = await fetchFilteredInvoices(query, currentPage);
 
     return (
         <div className="mt-6 flow-root">
@@ -97,10 +76,12 @@ export default function ExpenseTable({
                                     Date
                                     &nbsp;
                                     Filter
-                                    <button onClick={handleToggleDropdown}>
+                                    <button
+                                    // onClick={handleToggleDropdown}
+                                    >
                                         <ArrowDownOnSquareIcon className="h-5 w-5" />
                                     </button>
-                                    {showMonthDropdown && (
+                                    {/* {showMonthDropdown && (
                                         <div className="absolute z-10 mt-2 bg-white rounded-md shadow-lg">
                                             <div className="flex flex-wrap gap-2 p-2">
                                                 {months.map((month) => (
@@ -114,7 +95,7 @@ export default function ExpenseTable({
                                                 ))}
                                             </div>
                                         </div>
-                                    )}
+                                    )} */}
                                 </th>
                                 <th scope="col" className="px-3 py-5 font-medium">
                                     Status
