@@ -235,3 +235,15 @@ export async function getUser(email: string) {
     throw new Error('Failed to fetch user.');
   }
 }
+
+const ITEMS_PER_EXPENSE_PAGE = 6
+export async function getExpenses(chaseAPI: string) {
+  try {
+    const count = await chaseAPI
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_EXPENSE_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of expenses.');
+  }
+}

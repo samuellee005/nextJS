@@ -7,6 +7,9 @@ const {
 } = require('../app/lib/placeholder-data.js');
 const bcrypt = require('bcrypt');
 
+//if issues occur while seeding tables and I would want rerun the script again
+// i can drop existing tables by running "DROP TABLE tablename" in my databse query interface
+//this will delete the table and all of its data
 async function seedUsers(client) {
   try {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
